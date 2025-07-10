@@ -13,11 +13,13 @@
   <p id="error" style="color: red;"></p>
 
   <script>
+    const API_URL = "https://my-worker.moodinahmed.workers.dev";
+
     async function shorten() {
       const url = document.getElementById('url').value;
       const slug = document.getElementById('slug').value;
 
-      const res = await fetch('/api/shorten', {
+      const res = await fetch(`${API_URL}/api/shorten`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url, slug })
