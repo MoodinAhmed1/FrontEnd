@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom URL Shortener</title>
+</head>
+<body>
+  <h1>Shorten Your URL</h1>
+  <input id="url" placeholder="https://example.com"><br>
+  <input id="slug" placeholder="custom-slug"><br>
+  <button onclick="shorten()">Shorten</button>
+
+  <p id="result"></p>
+  <p id="error" style="color: red;"></p>
+
+  <script>
+    async function shorten() {
+      const url = document.getElementById('url').value;
+      const slug = document.getElementById('slug').value;
+
+      const res = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url, slug })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById('result').innerText = "Short URL: " + data.short;
+        document.getElementById('error').innerText = "";
+      } else {
+        const err = await res.text();
+        document.getElementById('error').innerText = err;
+        document.getElementById('result').innerText = "";
+      }
+    }
+  </script>
+</body>
+</html>
